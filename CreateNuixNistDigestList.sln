@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5FF33A34-30E4-4119-929A-7C926EAC166B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateNuixNistDigestListLib", "CreateNuixNistDigestListLib\CreateNuixNistDigestListLib.csproj", "{D2A17085-6EC8-4760-8FED-98393EE02F57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateNuixNistDigestListWin", "CreateNuixNistDigestListWin\CreateNuixNistDigestListWin.csproj", "{279240C3-34BC-47D1-8760-C0202ECB39E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateNuixNistDigestList", "CreateNuixNistDigestList\CreateNuixNistDigestList.csproj", "{2797F436-898B-41B7-A30F-C55F281BFAF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2A17085-6EC8-4760-8FED-98393EE02F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A17085-6EC8-4760-8FED-98393EE02F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A17085-6EC8-4760-8FED-98393EE02F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A17085-6EC8-4760-8FED-98393EE02F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279240C3-34BC-47D1-8760-C0202ECB39E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279240C3-34BC-47D1-8760-C0202ECB39E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279240C3-34BC-47D1-8760-C0202ECB39E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279240C3-34BC-47D1-8760-C0202ECB39E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2797F436-898B-41B7-A30F-C55F281BFAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2797F436-898B-41B7-A30F-C55F281BFAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2797F436-898B-41B7-A30F-C55F281BFAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2797F436-898B-41B7-A30F-C55F281BFAF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4D65699-B341-4322-8BAC-F338C16EF062}
+	EndGlobalSection
+EndGlobal
