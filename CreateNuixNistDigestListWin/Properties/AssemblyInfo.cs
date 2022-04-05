@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CreateNuixDigestListDirect")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Create Nuix Digest List for Windows")]
+[assembly: AssemblyDescription("Creates a Nuix Digest List from NIST NSRL RDS databases.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CreateNuixDigestListDirect")]
+[assembly: AssemblyProduct("Create Nuix Digest List")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

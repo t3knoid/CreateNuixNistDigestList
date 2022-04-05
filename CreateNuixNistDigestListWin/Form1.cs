@@ -644,6 +644,18 @@ namespace CreateNuixNistDigestList
 
         #endregion
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var executingAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+                MessageBox.Show($"{executingAssembly.GetCustomAttribute<AssemblyTitleAttribute>().Title} v{executingAssembly.GetName().Version.ToString()}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error trying to show version information. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
 }
