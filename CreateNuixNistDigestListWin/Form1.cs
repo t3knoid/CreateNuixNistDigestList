@@ -631,7 +631,14 @@ namespace CreateNuixNistDigestList
             previousGeneratedDigestCount = digestFile.GeneratedHashCodeCount;
             ShowMessageThreadSafe($"Current Nuix digest file creation rate is {currentCount} per minute.");
         }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btGetRDS.PerformClick();
+        }
+
         #endregion
+
     }
 
 }
