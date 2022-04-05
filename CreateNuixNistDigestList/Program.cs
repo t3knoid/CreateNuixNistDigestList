@@ -225,6 +225,11 @@ namespace CreateNuixNistDigestList
                     Environment.Exit(1);
                 }
             }
+            else
+            {
+                ShowMessage("Download of RDS files skipped.");
+            }
+
             #endregion            
 
             #region Exttact NSRL text files

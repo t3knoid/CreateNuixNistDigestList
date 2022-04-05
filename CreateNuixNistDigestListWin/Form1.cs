@@ -275,6 +275,10 @@ namespace CreateNuixNistDigestList
                     btGetRDS.Enabled = true;
                 }
             }
+            else
+            {
+                ShowMessageThreadSafe("Download of RDS files skipped.");
+            }
             #endregion
 
             #region Extract NSRL Text files
