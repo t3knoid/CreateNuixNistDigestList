@@ -53,16 +53,25 @@ namespace CreateNuixNistDigestList
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.cbDeleteHashcodeFiles = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.digestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.gbRDSVersion.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btGetRDS
             // 
             this.btGetRDS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btGetRDS.Location = new System.Drawing.Point(391, 379);
+            this.btGetRDS.Location = new System.Drawing.Point(391, 384);
             this.btGetRDS.Name = "btGetRDS";
             this.btGetRDS.Size = new System.Drawing.Size(75, 23);
             this.btGetRDS.TabIndex = 1;
@@ -132,7 +141,7 @@ namespace CreateNuixNistDigestList
             this.gbRDSVersion.Controls.Add(this.tbCustomVersion);
             this.gbRDSVersion.Controls.Add(this.rbCustom);
             this.gbRDSVersion.Controls.Add(this.rbCurrent);
-            this.gbRDSVersion.Location = new System.Drawing.Point(12, 146);
+            this.gbRDSVersion.Location = new System.Drawing.Point(12, 158);
             this.gbRDSVersion.Name = "gbRDSVersion";
             this.gbRDSVersion.Size = new System.Drawing.Size(460, 87);
             this.gbRDSVersion.TabIndex = 5;
@@ -198,7 +207,7 @@ namespace CreateNuixNistDigestList
             this.groupBox1.Controls.Add(this.cbModernMinimal);
             this.groupBox1.Controls.Add(this.cbModernUnique);
             this.groupBox1.Controls.Add(this.cbModern);
-            this.groupBox1.Location = new System.Drawing.Point(12, 249);
+            this.groupBox1.Location = new System.Drawing.Point(12, 254);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(460, 124);
             this.groupBox1.TabIndex = 7;
@@ -302,10 +311,10 @@ namespace CreateNuixNistDigestList
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(12, 11);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 37);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(456, 40);
+            this.richTextBox1.Size = new System.Drawing.Size(456, 24);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "This application helps with creating a Nuix compatible digest list using NIST NSR" +
     "L RDS from the NSRL website.";
@@ -328,12 +337,73 @@ namespace CreateNuixNistDigestList
             this.groupBox2.Controls.Add(this.cbSkipDownload);
             this.groupBox2.Controls.Add(this.tbBaseURL);
             this.groupBox2.Controls.Add(this.lbBaseURL);
-            this.groupBox2.Location = new System.Drawing.Point(12, 57);
+            this.groupBox2.Location = new System.Drawing.Point(12, 77);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(460, 71);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.digestToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(484, 24);
+            this.menuStrip1.TabIndex = 12;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            // 
+            // digestToolStripMenuItem
+            // 
+            this.digestToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createToolStripMenuItem,
+            this.extractToolStripMenuItem});
+            this.digestToolStripMenuItem.Name = "digestToolStripMenuItem";
+            this.digestToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.digestToolStripMenuItem.Text = "Digest";
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Text = "&Create";
+            // 
+            // extractToolStripMenuItem
+            // 
+            this.extractToolStripMenuItem.Name = "extractToolStripMenuItem";
+            this.extractToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractToolStripMenuItem.Text = "&Extract";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
             // 
             // Form1
             // 
@@ -346,8 +416,10 @@ namespace CreateNuixNistDigestList
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbRDSVersion);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btGetRDS);
             this.Controls.Add(this.groupBox2);
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 600);
             this.Name = "Form1";
@@ -363,6 +435,8 @@ namespace CreateNuixNistDigestList
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,6 +467,14 @@ namespace CreateNuixNistDigestList
         private System.Windows.Forms.LinkLabel linkLabelCurrentVersion;
         private System.Windows.Forms.CheckBox cbDeleteHashcodeFiles;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem digestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 
