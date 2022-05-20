@@ -45,9 +45,6 @@ namespace CreateNuixNistDigestList
         /// </summary>
         private List<RDSFile> rdsDownloads;
 
-        private long previousHashCodeCount = 0;
-        private long previousGeneratedDigestCount = 0;
-
         #endregion
 
         public Form1()
@@ -69,30 +66,32 @@ namespace CreateNuixNistDigestList
             baseURL = tbBaseURL.Text;
             baseURL = Utils.RemoveSlashFromEnd(tbBaseURL.Text);
 
-            Downloads downloads = new Downloads(workDir, ShowDownloadProgress, ShowMessageThreadSafe);
+            Status status = new Status();
+            status.Show();
+
+            Downloads downloads = new Downloads(workDir, status.ShowDownloadProgress, status.ShowMessageThreadSafe);
 
             #endregion
-
+            
             #region Download version file and display version in console            
 
             // This requires access to the internet
             try
             {
-                ShowMessageThreadSafe($"Getting version information start.");
+                status.ShowMessageThreadSafe($"Getting version information start.");
                 var versionFile = Path.Combine(workDir, Download.VERSION_FILE); // Make sure we also get the most current version file
-                Versions versions = new Versions(baseURL, ShowProgressThreadSafe, ShowMessageThreadSafe) { WorkDir = workDir, BaseURL = baseURL };
+                Versions versions = new Versions(baseURL, status.ShowProgressThreadSafe, status.ShowMessageThreadSafe) { WorkDir = workDir, BaseURL = baseURL };
                 var versionInfo = $"{ await versions.GetVersionInfo() }";
-                ShowMessageThreadSafe($"{versionInfo}");
-                ShowMessageThreadSafe($"Getting version information complete.");
+                status.ShowMessageThreadSafe($"{versionInfo}");
+                status.ShowMessageThreadSafe($"Getting version information complete.");
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Failed downloading Version file. Make sure you have internet access.\n\n{ex.Message}\n\n{ ex.StackTrace}\n\nContinuing.");
+                status.ShowMessageThreadSafe($"Failed downloading Version file. Make sure you have internet access.\n\n{ex.Message}\n\n{ ex.StackTrace}\n\nContinuing.");
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
             }
 
             #endregion
@@ -103,13 +102,13 @@ namespace CreateNuixNistDigestList
             try
             {
                 var url = $"{baseURL}/{version}/{Download.README_FILE}";
-                ShowMessageThreadSafe($"Downloading {url} starting.");
+                status.ShowMessageThreadSafe($"Downloading {url} starting.");
                 await downloads.Download(url);
-                ShowMessageThreadSafe($"Downloading {url} complete.");
+                status.ShowMessageThreadSafe($"Downloading {url} complete.");
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Failed downloading {Download.README_FILE} file. Make sure you have internet access.\n\n{ex.Message}");
+                status.ShowMessageThreadSafe($"Failed downloading {Download.README_FILE} file. Make sure you have internet access.\n\n{ex.Message}");
                 MessageBox.Show($"Failed downloading {Download.README_FILE} file. Make sure you have internet access.\n\n{ex.Message}", "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 if (File.Exists(Path.Combine(workDir, Download.README_FILE)))
                 {
@@ -123,7 +122,7 @@ namespace CreateNuixNistDigestList
                 else 
                 {
                     // Without a README file, application cannot continue, exit.
-                    ShowMessageThreadSafe($"This application requires {Download.README_FILE} file. Exiting.");
+                    status.ShowMessageThreadSafe($"This application requires {Download.README_FILE} file. Exiting.");
                     MessageBox.Show($"This application requires {Download.README_FILE} file. Exiting.", "Readme Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     btGetRDS.Enabled = true;
                     return;
@@ -131,8 +130,7 @@ namespace CreateNuixNistDigestList
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
             }
 
             #endregion
@@ -143,7 +141,7 @@ namespace CreateNuixNistDigestList
                 //
                 // Initialize RDS downloads using values from README
                 // 
-                ShowMessageThreadSafe($"Parsing {Download.README_FILE} start.");
+                status.ShowMessageThreadSafe($"Parsing {Download.README_FILE} start.");
                 rdsDownloads = new List<RDSFile>();
                 var pathtoReadme = Path.Combine(workDir, Download.README_FILE);
 
@@ -171,8 +169,8 @@ namespace CreateNuixNistDigestList
                     rdsVersionFile.RDSFileName = System.IO.Path.GetFileName(rdsVersionFile.DownloadURL);
                     rdsVersionFile.RDSName = downloadFileTypes.FirstOrDefault(x => x.Value == rdsVersionFile.RDSFileName).Key;
                     rdsVersionFile.BaseURL = baseURL;
-                    rdsVersionFile.ShowMessageCallbackMethod = ShowMessageThreadSafe;
-                    rdsVersionFile.ShowProgressCallbackMethod = ShowProgressThreadSafe;
+                    rdsVersionFile.ShowMessageCallbackMethod = status.ShowMessageThreadSafe;
+                    rdsVersionFile.ShowProgressCallbackMethod = status.ShowProgressThreadSafe;
                     rdsVersionFile.WorkDir = workDir;
                     rdsVersionFile.Version = version;
                     rdsDownloads.Add(rdsVersionFile);
@@ -201,25 +199,24 @@ namespace CreateNuixNistDigestList
 
                         // Initialize common properties
                         rdsfile.BaseURL = baseURL;
-                        rdsfile.ShowMessageCallbackMethod = ShowMessageThreadSafe;
-                        rdsfile.ShowProgressCallbackMethod = ShowProgressThreadSafe;
+                        rdsfile.ShowMessageCallbackMethod = status.ShowMessageThreadSafe;
+                        rdsfile.ShowProgressCallbackMethod = status.ShowProgressThreadSafe;
                         rdsfile.WorkDir = workDir;
                         rdsfile.Version = version;                        
                         rdsDownloads.Add(rdsfile);
                     }
                 }
-                ShowMessageThreadSafe($"Parsing {Download.README_FILE} complete.");
+                status.ShowMessageThreadSafe($"Parsing {Download.README_FILE} complete.");
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Error parsing README file. {ex.Message}\n\n{ex.StackTrace}");
+                status.ShowMessageThreadSafe($"Error parsing README file. {ex.Message}\n\n{ex.StackTrace}");
                 MessageBox.Show($"Error parsing README file. {ex.Message}", "Error Reading README", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
                 btGetRDS.Enabled = true;
             }
             #endregion
@@ -264,20 +261,19 @@ namespace CreateNuixNistDigestList
                 }
                 catch (Exception ex)
                 {
-                    ShowMessageThreadSafe($"Download failed. {ex.Message}\n\n{ex.StackTrace}");
+                    status.ShowMessageThreadSafe($"Download failed. {ex.Message}\n\n{ex.StackTrace}");
                     MessageBox.Show($"Download failed. {ex.Message}", "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 finally
                 {
-                    toolStripProgressBar1.Value = 0;
-                    toolStripStatusLabel1.Text = string.Empty;
+                    status.ResetProgressThreadSafe();
                     btGetRDS.Enabled = true;
                 }
             }
             else
             {
-                ShowMessageThreadSafe("Download of RDS files skipped.");
+                status.ShowMessageThreadSafe("Download of RDS files skipped.");
             }
             #endregion
 
@@ -326,14 +322,13 @@ namespace CreateNuixNistDigestList
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Extract NSRL text file. {ex.Message}\n\n{ex.StackTrace}");
+                status.ShowMessageThreadSafe($"Extract NSRL text file. {ex.Message}\n\n{ex.StackTrace}");
                 MessageBox.Show($"Extract NSRL text file. {ex.Message}", "Extract Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
                 btGetRDS.Enabled = true;
             }
 
@@ -353,7 +348,7 @@ namespace CreateNuixNistDigestList
                     {
                         if (File.Exists(file))
                         {
-                            ShowMessageThreadSafe($"WARNING: Deleting existing unsorted hashcode file, {file}.");
+                            status.ShowMessageThreadSafe($"WARNING: Deleting existing unsorted hashcode file, {file}.");
                             File.Delete(file);
                         }
                     }
@@ -362,7 +357,7 @@ namespace CreateNuixNistDigestList
                     {
                         if (File.Exists(file))
                         {
-                            ShowMessageThreadSafe($"WARNING: Deleting existing sorted hashcode file, {file}.");
+                            status.ShowMessageThreadSafe($"WARNING: Deleting existing sorted hashcode file, {file}.");
                             File.Delete(file);
                         }
                     }
@@ -370,13 +365,13 @@ namespace CreateNuixNistDigestList
                     var mergedhashcodefile = $"{hashcodeFilePathPrefix}.txt";
                     if (File.Exists(mergedhashcodefile))
                     {
-                        ShowMessageThreadSafe($"WARNING: Deleting merged hashcode file, {mergedhashcodefile}.");
+                        status.ShowMessageThreadSafe($"WARNING: Deleting merged hashcode file, {mergedhashcodefile}.");
                         File.Delete(mergedhashcodefile);
                     }
                 }
                 catch (Exception ex)
                 {
-                    ShowMessageThreadSafe($"Error deleting exsting hashcode files.\n\n{ex.Message}\n\n{ex.StackTrace}");
+                    status.ShowMessageThreadSafe($"Error deleting exsting hashcode files.\n\n{ex.Message}\n\n{ex.StackTrace}");
                 }
             }
 
@@ -386,7 +381,7 @@ namespace CreateNuixNistDigestList
 
             try
             {
-                ShowMessageThreadSafe($"Writing hashcodes to hashcode file(s) started.");
+                status.ShowMessageThreadSafe($"Writing hashcodes to hashcode file(s) started.");
                 totalnumberofHashCodes = 0;
                 int numFiles = 0;
                 string currentDir = Path.GetDirectoryName(hashcodeFilePathPrefix);
@@ -394,9 +389,9 @@ namespace CreateNuixNistDigestList
 
                 foreach (var nsrlTextFilePath in listofNSRLTextFilePaths)
                 {
-                    HashCodes hashCodes = new HashCodes(nsrlTextFilePath, hashcodeFilePathPrefix, ShowProgressThreadSafe, ShowMessageThreadSafe) { FileCount = numFiles };
+                    HashCodes hashCodes = new HashCodes(nsrlTextFilePath, hashcodeFilePathPrefix, status.ShowProgressThreadSafe, status.ShowMessageThreadSafe) { FileCount = numFiles };
                     Timer showProgressTimer = new Timer();
-                    showProgressTimer.Tick += (object s, EventArgs a) => CopytoHashcodeFileChunks_ShowMessageProgress(s, a, hashCodes);
+                    showProgressTimer.Tick += (object s, EventArgs a) => status.CopytoHashcodeFileChunks_ShowMessageProgress(s, a, hashCodes);
                     showProgressTimer.Interval = 60000;
                     showProgressTimer.Enabled = true;
                     showProgressTimer.Start();
@@ -405,22 +400,20 @@ namespace CreateNuixNistDigestList
                     showProgressTimer.Enabled = false;
                     numFiles = hashCodes.FileCount;
                     totalnumberofHashCodes += hashCodes.Count; // Update total
-                    toolStripProgressBar1.Value = 0;
-                    toolStripStatusLabel1.Text = string.Empty;
+                    status.ResetProgressThreadSafe();
                 }
-                ShowMessageThreadSafe($"Writing hashcodes to hashcode file (s), completed.");
+                status.ShowMessageThreadSafe($"Writing hashcodes to hashcode file (s), completed.");
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Writing hashcodes to hashcode file failed. { ex.Message}\n{ex.StackTrace}");
+                status.ShowMessageThreadSafe($"Writing hashcodes to hashcode file failed. { ex.Message}\n{ex.StackTrace}");
                 MessageBox.Show($"Writing hashcodes to hashcode file failed. {ex.Message}\n{ex.StackTrace}");
                 btGetRDS.Enabled = true;
                 return; // Dont continue processing
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
             }
             #endregion
 
@@ -432,12 +425,12 @@ namespace CreateNuixNistDigestList
             ExternalSortMerge externalSortMerge = null;
             try
             {
-                externalSortMerge = new ExternalSortMerge(hashcodeFilePathPrefix, ShowMessageThreadSafe, ShowProgressThreadSafe);
+                externalSortMerge = new ExternalSortMerge(hashcodeFilePathPrefix, status.ShowMessageThreadSafe, status.ShowProgressThreadSafe);
                 await Task.Run(() => externalSortMerge.SortUnsortedHashCodeFiles());
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Sorting hashcodes failed. { ex.Message}\n{ex.StackTrace}");
+                status.ShowMessageThreadSafe($"Sorting hashcodes failed. { ex.Message}\n{ex.StackTrace}");
                 MessageBox.Show($"Sorting hashcodes failed. {ex.Message}\n{ex.StackTrace}");
                 btGetRDS.Enabled = true;
                 return; // Dont continue processing
@@ -450,15 +443,14 @@ namespace CreateNuixNistDigestList
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Merging hashcodes failed. { ex.Message}\n{ex.StackTrace}");
+                status.ShowMessageThreadSafe($"Merging hashcodes failed. { ex.Message}\n{ex.StackTrace}");
                 MessageBox.Show($"Merging hashcodes failed. {ex.Message}\n{ex.StackTrace}");
                 btGetRDS.Enabled = true;
                 return; // Dont continue processing
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
             }
 
             #endregion
@@ -476,39 +468,37 @@ namespace CreateNuixNistDigestList
                     // Generate hashcode
                     if (File.Exists(nuixdigestfilePath))
                     {
-                        ShowMessageThreadSafe($"WARNING: Overwriting existing digest file, {nuixdigestfilePath}.");
+                        status.ShowMessageThreadSafe($"WARNING: Overwriting existing digest file, {nuixdigestfilePath}.");
                     }
 
-                    NuixDigestFile nuixDigestFile = new NuixDigestFile(uniqueHashCodeFilePath, ShowProgressThreadSafe, ShowMessageThreadSafe);
+                    NuixDigestFile nuixDigestFile = new NuixDigestFile(uniqueHashCodeFilePath, status.ShowProgressThreadSafe, status.ShowMessageThreadSafe);
                     nuixDigestFile.NumberOfhashCodes = totalnumberofUniqueHashCodes;
                     Timer showProgressTimer = new Timer();
-                    showProgressTimer.Tick += (object s, EventArgs a) => CreateNuixDigest_ShowMessageProgress(s, a, nuixDigestFile);
+                    showProgressTimer.Tick += (object s, EventArgs a) => status.CreateNuixDigest_ShowMessageProgress(s, a, nuixDigestFile);
                     showProgressTimer.Interval = 60000;
                     showProgressTimer.Enabled = true;
                     showProgressTimer.Start();
                     await Task.Run(() => nuixDigestFile.Create(nuixdigestfilePath));
                     showProgressTimer.Stop();
                     showProgressTimer.Enabled = false;
-                    toolStripProgressBar1.Value = 0;
-                    toolStripStatusLabel1.Text = string.Empty;
+                    status.ResetProgressThreadSafe();
                 }
                 else
                 {
-                    ShowMessageThreadSafe($"WARNING: Hashcode file, {uniqueHashCodeFilePath}, is empty. Nothing to do.");
+                    status.ShowMessageThreadSafe($"WARNING: Hashcode file, {uniqueHashCodeFilePath}, is empty. Nothing to do.");
                     MessageBox.Show($"Hashcode file, {uniqueHashCodeFilePath}, is empty. Nothing to do.", "Empty Hashcode File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Failed to create a Nuix digest list. {ex.Message}\n{ex.StackTrace}");
+                status.ShowMessageThreadSafe($"Failed to create a Nuix digest list. {ex.Message}\n{ex.StackTrace}");
                 MessageBox.Show($"Failed to create a Nuix digest list. {ex.Message}", "Error Creating Digest List", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 btGetRDS.Enabled = true;
                 return; // Dont continue processing
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
             }
             #endregion
 
@@ -542,8 +532,6 @@ namespace CreateNuixNistDigestList
             workDir = Path.Combine(Utils.AssemblyDirectory, "NuixDigest");
             baseURL = Utils.RemoveSlashFromEnd(tbBaseURL.Text);
 
-            statusStrip1_Resize(this, e);
-
             try
             {
                 Directory.CreateDirectory(workDir);
@@ -556,8 +544,10 @@ namespace CreateNuixNistDigestList
         }
         private async void Form1_Shown(object sender, EventArgs e)
         {
+            Status status = new Status(true);
             try
-            {
+            {                
+                status.Show();
                 // Get current RDS version information
                 var tempWorkdir = Path.GetTempPath();
                 var versionFile = Path.Combine(tempWorkdir, Download.VERSION_FILE); // Make sure we also get the most current version file
@@ -565,72 +555,26 @@ namespace CreateNuixNistDigestList
                 {
                     File.Delete(versionFile);
                 }
-                baseURL = Utils.RemoveSlashFromEnd(baseURL);
-                Versions versions = new Versions(baseURL, ShowProgressThreadSafe, ShowMessageThreadSafe) { WorkDir = workDir, BaseURL = baseURL };
+                baseURL = Utils.RemoveSlashFromEnd(baseURL);                
+                Versions versions = new Versions(baseURL, status.ShowProgressThreadSafe, status.ShowMessageThreadSafe) { WorkDir = workDir, BaseURL = baseURL };
                 var versionInfo = $"{ await versions.GetVersionInfo() }";
                 linkLabelCurrentVersion.Text = versionInfo;
                 File.Delete(versionFile); // Clean up
             }
             catch (Exception ex)
             {
-                ShowMessageThreadSafe($"Failed to get current version information. {ex.Message}");
+                status.ShowMessageThreadSafe($"Failed to get current version information. {ex.Message}");
             }
             finally
             {
-                toolStripProgressBar1.Value = 0;
-                toolStripStatusLabel1.Text = string.Empty;
+                status.ResetProgressThreadSafe();
+                status.Close();
             }
         }
         private void linkLabelCurrentVersion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl/nsrl-download/current-rds");
         }               
-        private void ShowDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
-        {
-            ShowProgressThreadSafe(e.ProgressPercentage, $"Downloaded {e.BytesReceived / 1000 / 1000} of {e.TotalBytesToReceive / 1000 / 1000} megabytes");
-        }        
-        private void ShowProgressThreadSafe(int value, string message = "")
-        {
-            if (toolStripStatusLabel1.GetCurrentParent().InvokeRequired) // Get to check invocation of parent when checking ToolStripStatus
-            {
-                toolStripStatusLabel1.GetCurrentParent().Invoke(new MethodInvoker(() => toolStripStatusLabel1.Text = message));
-                toolStripProgressBar1.GetCurrentParent().Invoke(new MethodInvoker(() => toolStripProgressBar1.Value = value));
-            }
-            else
-            {
-                toolStripStatusLabel1.Text = message;
-                toolStripProgressBar1.Value = value;
-            }
-        }
-        private void ShowMessageThreadSafe(string message)
-        {
-            if (tbConsole.InvokeRequired) // Get to check invocation of parent when checking ToolStripStatus
-            {
-                tbConsole.Invoke(new MethodInvoker(() => tbConsole.AppendText(DateTime.Now.ToString("yyyyMMddHHmmss.fffK") + " " + message + Environment.NewLine)));
-            }
-            else
-            {
-                tbConsole.AppendText(DateTime.Now.ToString("yyyMMddHHmmss.fffK") + " " + message + Environment.NewLine);
-            }
-        }
-        private void statusStrip1_Resize(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Width = statusStrip1.Bounds.Right / 2;
-            toolStripProgressBar1.Width = statusStrip1.Bounds.Right - toolStripStatusLabel1.Bounds.Right - 20;
-        }
-
-        private void CopytoHashcodeFileChunks_ShowMessageProgress(object sender, EventArgs e, HashCodes hashCodes)
-        {
-            long currentCount = hashCodes.Count - previousHashCodeCount;
-            previousHashCodeCount = hashCodes.Count;
-            ShowMessageThreadSafe($"Current hashcode copy rate is {currentCount} per minute.");
-        }
-        private void CreateNuixDigest_ShowMessageProgress(object sender, EventArgs e, NuixDigestFile digestFile)
-        {
-            long currentCount = digestFile.GeneratedHashCodeCount - previousGeneratedDigestCount;
-            previousGeneratedDigestCount = digestFile.GeneratedHashCodeCount;
-            ShowMessageThreadSafe($"Current Nuix digest file creation rate is {currentCount} per minute.");
-        }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -641,8 +585,6 @@ namespace CreateNuixNistDigestList
         {
             this.Close();
         }
-
-        #endregion
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -656,6 +598,12 @@ namespace CreateNuixNistDigestList
                 MessageBox.Show($"Error trying to show version information. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void extractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 
 }

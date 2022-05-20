@@ -30,9 +30,6 @@ namespace CreateNuixNistDigestList
         private void InitializeComponent()
         {
             this.btGetRDS = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.tbBaseURL = new System.Windows.Forms.TextBox();
             this.lbBaseURL = new System.Windows.Forms.Label();
             this.gbRDSVersion = new System.Windows.Forms.GroupBox();
@@ -49,7 +46,6 @@ namespace CreateNuixNistDigestList
             this.cbModernMinimal = new System.Windows.Forms.CheckBox();
             this.cbModernUnique = new System.Windows.Forms.CheckBox();
             this.cbModern = new System.Windows.Forms.CheckBox();
-            this.tbConsole = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.cbDeleteHashcodeFiles = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -61,7 +57,6 @@ namespace CreateNuixNistDigestList
             this.extractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1.SuspendLayout();
             this.gbRDSVersion.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -71,46 +66,13 @@ namespace CreateNuixNistDigestList
             // btGetRDS
             // 
             this.btGetRDS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btGetRDS.Location = new System.Drawing.Point(391, 384);
+            this.btGetRDS.Location = new System.Drawing.Point(391, 380);
             this.btGetRDS.Name = "btGetRDS";
             this.btGetRDS.Size = new System.Drawing.Size(75, 23);
             this.btGetRDS.TabIndex = 1;
             this.btGetRDS.Text = "Go";
             this.btGetRDS.UseVisualStyleBackColor = true;
             this.btGetRDS.Click += new System.EventHandler(this.btGetRDS_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.AutoSize = false;
-            this.statusStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(484, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.Resize += new System.EventHandler(this.statusStrip1_Resize);
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.AutoSize = false;
-            this.toolStripStatusLabel1.AutoToolTip = true;
-            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripStatusLabel1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(230, 17);
-            this.toolStripStatusLabel1.Text = "status";
-            this.toolStripStatusLabel1.ToolTipText = "Shows the current operation";
-            // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripProgressBar1.AutoSize = false;
-            this.toolStripProgressBar1.AutoToolTip = true;
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(235, 16);
             // 
             // tbBaseURL
             // 
@@ -209,7 +171,7 @@ namespace CreateNuixNistDigestList
             this.groupBox1.Controls.Add(this.cbModern);
             this.groupBox1.Location = new System.Drawing.Point(12, 254);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(460, 124);
+            this.groupBox1.Size = new System.Drawing.Size(460, 120);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "RDS Selection";
@@ -228,8 +190,6 @@ namespace CreateNuixNistDigestList
             // cbiOS
             // 
             this.cbiOS.AutoSize = true;
-            this.cbiOS.Checked = true;
-            this.cbiOS.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbiOS.Location = new System.Drawing.Point(347, 57);
             this.cbiOS.Name = "cbiOS";
             this.cbiOS.Size = new System.Drawing.Size(43, 17);
@@ -240,8 +200,6 @@ namespace CreateNuixNistDigestList
             // cbAndroid
             // 
             this.cbAndroid.AutoSize = true;
-            this.cbAndroid.Checked = true;
-            this.cbAndroid.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbAndroid.Location = new System.Drawing.Point(179, 88);
             this.cbAndroid.Name = "cbAndroid";
             this.cbAndroid.Size = new System.Drawing.Size(62, 17);
@@ -252,8 +210,6 @@ namespace CreateNuixNistDigestList
             // cbLegacy
             // 
             this.cbLegacy.AutoSize = true;
-            this.cbLegacy.Checked = true;
-            this.cbLegacy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbLegacy.Location = new System.Drawing.Point(347, 88);
             this.cbLegacy.Name = "cbLegacy";
             this.cbLegacy.Size = new System.Drawing.Size(61, 17);
@@ -293,18 +249,6 @@ namespace CreateNuixNistDigestList
             this.cbModern.Text = "Modern";
             this.cbModern.UseVisualStyleBackColor = true;
             // 
-            // tbConsole
-            // 
-            this.tbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConsole.Location = new System.Drawing.Point(12, 420);
-            this.tbConsole.Multiline = true;
-            this.tbConsole.Name = "tbConsole";
-            this.tbConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbConsole.Size = new System.Drawing.Size(460, 104);
-            this.tbConsole.TabIndex = 8;
-            // 
             // richTextBox1
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -314,7 +258,7 @@ namespace CreateNuixNistDigestList
             this.richTextBox1.Location = new System.Drawing.Point(12, 37);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(456, 24);
+            this.richTextBox1.Size = new System.Drawing.Size(456, 26);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "This application helps with creating a Nuix compatible digest list using NIST NSR" +
     "L RDS from the NSRL website.";
@@ -367,7 +311,7 @@ namespace CreateNuixNistDigestList
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -383,15 +327,16 @@ namespace CreateNuixNistDigestList
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.createToolStripMenuItem.Text = "&Create";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // extractToolStripMenuItem
             // 
             this.extractToolStripMenuItem.Name = "extractToolStripMenuItem";
-            this.extractToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.extractToolStripMenuItem.Text = "&Extract";
+            this.extractToolStripMenuItem.Click += new System.EventHandler(this.extractToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -404,7 +349,7 @@ namespace CreateNuixNistDigestList
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -413,25 +358,21 @@ namespace CreateNuixNistDigestList
             this.AcceptButton = this.btGetRDS;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 561);
+            this.ClientSize = new System.Drawing.Size(484, 411);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.tbConsole);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbRDSVersion);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btGetRDS);
             this.Controls.Add(this.groupBox2);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(500, 600);
+            this.MinimumSize = new System.Drawing.Size(500, 450);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Create Nuix Digest List";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.gbRDSVersion.ResumeLayout(false);
             this.gbRDSVersion.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -447,9 +388,6 @@ namespace CreateNuixNistDigestList
 
         #endregion
         private System.Windows.Forms.Button btGetRDS;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.TextBox tbBaseURL;
         private System.Windows.Forms.Label lbBaseURL;
         private System.Windows.Forms.GroupBox gbRDSVersion;
@@ -465,7 +403,6 @@ namespace CreateNuixNistDigestList
         private System.Windows.Forms.CheckBox cbModernMinimal;
         private System.Windows.Forms.CheckBox cbModernUnique;
         private System.Windows.Forms.CheckBox cbModern;
-        private System.Windows.Forms.TextBox tbConsole;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.LinkLabel linkLabelCurrentVersion;
         private System.Windows.Forms.CheckBox cbDeleteHashcodeFiles;
