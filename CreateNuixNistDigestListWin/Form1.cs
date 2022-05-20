@@ -500,10 +500,11 @@ namespace CreateNuixNistDigestList
             {
                 status.ResetProgressThreadSafe();
             }
+
             #endregion
 
             btGetRDS.Enabled = true;
-        }        
+        }
         private void tbBaseURL_Click(object sender, EventArgs e)
         {
             if (tbBaseURL.Enabled == false)
@@ -575,17 +576,14 @@ namespace CreateNuixNistDigestList
         {
             System.Diagnostics.Process.Start("https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl/nsrl-download/current-rds");
         }               
-
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btGetRDS.PerformClick();
         }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -598,11 +596,11 @@ namespace CreateNuixNistDigestList
                 MessageBox.Show($"Error trying to show version information. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void extractToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            throw new NotImplementedException();
         }
+
         #endregion
     }
 
